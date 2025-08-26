@@ -1,11 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login & Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .input-focus:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
 </head>
-<body>
-    
+
+<body
+    class="min-h-screen bg-gray-100 flex items-center justify-center p-4 h-screen w-screen bg-[url('Images/gali.jpg')] bg-cover  bg-no-repeat">
+    <!-- Alert Modal -->
+    <div id="alertModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-6 max-w-sm w-full mx-4 card-shadow">
+            <div class="flex items-center mb-4">
+                <i id="alertIcon" class="text-2xl mr-3"></i>
+                <h3 id="alertTitle" class="text-lg font-semibold"></h3>
+            </div>
+            <p id="alertMessage" class="text-gray-600 mb-6"></p>
+            <button onclick="closeAlert()"
+                class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                OK
+            </button>
+        </div>
+    </div>
+
+    <div class="w-full max-w-4xl">
+        <!-- Welcome Section -->
+        <div id="welcomeSection"
+            class="flex-col backdrop-blur-md lg:rounded-3xl p-8 text-white text-center mb-8 card-shadow flex justify-evenly md:flex-row">
+            <div class="flex flex-col justify-center">
+                <h1 class="text-4xl font-bold mb-4">Hello, Welcome!</h1>
+                <p class="text-lg mb-6 opacity-90">Don't have an account?</p>
+                <button onclick="showRegistration()"
+                    class="mb-6 bg-white  lg:bg-white text-blue-600 px-24 py-3  rounded-full font-semibold hover:bg-gray-100 transition duration-300 ">
+                    Register
+                </button>
+            </div>
+            <!-- Login Form -->
+            <div id="loginForm" class="bg-white/10 backdrop-blur-md rounded-2xl px-14 py-8 card-shadow">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">Login</h2>
+
+                <form id="loginFormElement">
+                    <div class="mb-4">
+                        <div class="relative">
+                            <input type="text" id="loginUsername" placeholder="Username"
+                                class="w-full px-12 py-3 pl-12 border border-gray-300 text-gray-950 rounded-full input-focus transition duration-300"
+                                required>
+                            <i class="fas fa-user absolute left-4 top-4 text-gray-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="relative">
+                            <input type="password" id="loginPassword" placeholder="Password"
+                                class="w-full px-4 py-3 pl-12 border border-gray-300 text-gray-950 rounded-full input-focus transition duration-300 "
+                                required>
+                            <i class="fas fa-lock absolute left-4 top-4 text-gray-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-6 text-right">
+                        <a href="#" class="text-blue-500 hover:text-blue-600 text-sm">Forgot password?</a>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full gradient-bg text-white py-3 rounded-full font-semibold hover:opacity-90 transition duration-300 mb-4">
+                        Login
+                    </button>
+                </form>
+
+                <div class="text-center">
+                    <p class="text-gray-200 text-sm mb-4">or login with social platforms</p>
+                    <div class="flex justify-center space-x-4">
+                        <button
+                            class="w-10 h-10 bg-red-500 text-white rounded-lg hover:bg-red-600 transition duration-300">
+                            <i class="fab fa-google"></i>
+                        </button>
+                        <button
+                            class="w-10 h-10 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button
+                            class="w-10 h-10 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition duration-300">
+                            <i class="fab fa-github"></i>
+                        </button>
+                        <button
+                            class="w-10 h-10 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300">
+                            <i class="fab fa-linkedin-in"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div id="registrationForm" class="bg-white/10 backdrop-blur-md rounded-2xl px-14 py-8 card-shadow hidden">
+                <h2 class="text-3xl font-bold text-white mb-6 text-center">Registration</h2>
+
+                <form id="registrationFormElement">
+                    <div class="mb-4">
+                        <div class="relative">
+                            <input type="text" id="regUsername" placeholder="Username"
+                                class="w-full px-4 py-3 pl-12 border border-gray-300 text-gray-950 rounded-full input-focus transition duration-300"
+                                required>
+                            <i class="fas fa-user absolute left-4 top-4 text-gray-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <div class="relative">
+                            <input type="email" id="regEmail" placeholder="Email"
+                                class="w-full px-4 py-3 pl-12 border border-gray-300 text-gray-950 rounded-full input-focus transition duration-300"
+                                required>
+                            <i class="fas fa-envelope absolute left-4 top-4 text-gray-600"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <div class="relative">
+                            <input type="password" id="regPassword" placeholder="Password"
+                                class="w-full px-4 py-3 pl-12 border border-gray-300 text-gray-950 rounded-full input-focus transition duration-300"
+                                required>
+                            <i class="fas fa-lock absolute left-4 top-4 text-gray-600"></i>
+                        </div>
+                        <div class="mt-2 text-xs text-gray-200">
+                            Password must contain: 8+ characters, uppercase, number, and symbol
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full gradient-bg text-white py-3 rounded-full font-semibold hover:opacity-90 transition duration-300">
+                        Register
+                    </button>
+                </form>
+
+                <div class="mt-6 text-center">
+                    <p class="text-gray-200 text-sm">Already have an account?
+                        <button onclick="showLogin()"
+                            class="text-blue-500 hover:text-blue-600 font-semibold">Login</button>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Mobile Welcome Card -->
+            <div id="mobileWelcome"
+                class="md:hidden gradient-bg rounded-2xl p-6 text-white text-center card-shadow hidden">
+                <h2 class="text-2xl font-bold mb-3">Hello, Welcome!</h2>
+                <p class="mb-4 opacity-90">Don't have an account?</p>
+                <button onclick="showRegistration()"
+                    class="bg-white text-blue-600 px-6 py-2 rounded-full font-semibold hover:bg-gray-100 transition duration-300">
+                    Register
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
 </body>
+
 </html>
